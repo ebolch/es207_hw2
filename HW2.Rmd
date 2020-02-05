@@ -1,0 +1,37 @@
+---
+title: "ES 207 HW2"
+author: "Erik Bolch"
+output: html_document
+---
+<span style ="color:crimson">1. Using the help documentation, provide an alternative useage for the function ncol()</span>
+
+<span style="color:blue"> An alternative use of ncol() could be to determine if an object has dimensions associated with it. For example when ncol function is used on a vector as opposed to an array or matrix it will return NULL.</span>
+
+```{r}
+?ncol
+m<-matrix(1:10, 2,5)
+m
+ncol(m)
+NCOL(m)
+
+v<-1:10
+v
+ncol(v)
+NCOL(v)
+```
+2. Make sure to clone the tutorial repo to a new repo in your GitHub account called es207_hw2. I will check your repo, so don’t skip this step!
+
+3. Convert RMarkdown_Demo_1.R into a well commented and easy to follow R Markdown document. Turn this in as a .pdf document separate from the rest of your homework assignment. Call it “yourlastname_demo_1.pdf”.
+
+4. Complete the remaining homework below as a well-commented and easy to follow R Markdown notebook with approriate accompanying text. Turn this in as a .html document. Call it “yourlastname_hw2.html”.
+
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+
