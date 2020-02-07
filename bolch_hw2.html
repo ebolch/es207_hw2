@@ -509,11 +509,291 @@ f1</code></pre>
 <p><span style="color:blue">False because an array will have an extra dimension (layers).</span></p>
 <p><span style="color:crimson">22. Why didn’t that work? Hint: read the errors</span></p>
 <p><span style="color:blue">This doesnt work because there are 3 ages, not 2 in the ages vector. Since there are a different number of rows in the vectors, they can’t be put into a data frame like this.</span></p>
+<pre class="r"><code>f &lt;- data.frame(kids=c(&quot;Jack&quot;,&quot;Jill&quot;),ages=c(12,11))
+f</code></pre>
+<pre><code>##   kids ages
+## 1 Jack   12
+## 2 Jill   11</code></pre>
 <pre class="r"><code>#f &lt;- data.frame(kids=c(&quot;Jack&quot;,&quot;Jill&quot;),ages=c(12,10,11))
 #f</code></pre>
-<p><span style="color:crimson">BONUS. What is a tibble? Why might it be better than a data frame? Why might it be worse?</span> <span style="color:blue"> It may be better or worse depending on what you want. A tibble will read in the kids names as character vectors, while a dataframe will read them in as factors. If you want factors, such as when you’ll be separating something based on a feature, this may not be helpful. If you’re not doing this, and you have to manipulate the information in the kids column, you’ll have to delete/modify the levels after you make changes.</span></p>
+<p><span style="color:crimson">BONUS. What is a tibble? Why might it be better than a data frame? Why might it be worse?</span></p>
+<p><span style="color:blue"> It may be better or worse depending on what you want. A tibble will read in the kids names as character vectors, while a dataframe will read them in as factors. If you want factors, such as when you’ll be separating something based on a feature, this may not be helpful. If you’re not doing this, and you have to manipulate the information in the kids column, you’ll have to delete/modify the levels after you make changes.</span></p>
 <pre class="r"><code>#f2 &lt;- tibble(kids=c(&quot;Jack&quot;,&quot;Jill&quot;),ages=c(12,10))
 #f2</code></pre>
+<p><span style="color:crimson">23. What does as.matrix() do when applied to a data frame with columns of different types?</span></p>
+<p><span style="color:blue">The vectors are coerced into type “character”.</span></p>
+<pre class="r"><code>f.mat&lt;-as.matrix(f)
+f.mat</code></pre>
+<pre><code>##      kids   ages
+## [1,] &quot;Jack&quot; &quot;12&quot;
+## [2,] &quot;Jill&quot; &quot;11&quot;</code></pre>
+<p><span style="color:crimson">24. What if we don’t have the same variable name? Change the data frame variables names using names(d2) &lt;- c(“ages”,“kids”). Then, use the help documentation to merge d1 and d2. Print your results.</span></p>
+<pre class="r"><code>d1 &lt;- data.frame(names = c(&quot;Jack&quot;, &quot;Jill&quot;, &quot;John&quot;), states = c(&quot;CA&quot;, &quot;IL&quot;, &quot;IL&quot;))
+d2 &lt;- data.frame(ages = c(10, 7, 12), names = c(&quot;Jill&quot;, &quot;Jillian&quot;, &quot;Jack&quot;))
+d1</code></pre>
+<pre><code>##   names states
+## 1  Jack     CA
+## 2  Jill     IL
+## 3  John     IL</code></pre>
+<pre class="r"><code>d2</code></pre>
+<pre><code>##   ages   names
+## 1   10    Jill
+## 2    7 Jillian
+## 3   12    Jack</code></pre>
+<pre class="r"><code>merge(d1,d2)</code></pre>
+<pre><code>##   names states ages
+## 1  Jack     CA   12
+## 2  Jill     IL   10</code></pre>
+<pre class="r"><code>names(d2) &lt;- c(&quot;ages&quot;,&quot;kids&quot;)
+merge(d1,d2)</code></pre>
+<pre><code>##   names states ages    kids
+## 1  Jack     CA   10    Jill
+## 2  Jill     IL   10    Jill
+## 3  John     IL   10    Jill
+## 4  Jack     CA    7 Jillian
+## 5  Jill     IL    7 Jillian
+## 6  John     IL    7 Jillian
+## 7  Jack     CA   12    Jack
+## 8  Jill     IL   12    Jack
+## 9  John     IL   12    Jack</code></pre>
+<pre class="r"><code>merge(d1,d2, by.x = &quot;names&quot;, by.y = &quot;kids&quot;)</code></pre>
+<pre><code>##   names states ages
+## 1  Jack     CA   12
+## 2  Jill     IL   10</code></pre>
+<p><span style="color:crimson">25. Can you have a data frame with 0 rows? What about 0 columns?</span></p>
+<p><span style="color:blue">Yes, if it has no information in it (NULL).</span></p>
+<pre class="r"><code>a &lt;- data.frame(NULL)
+class(a)</code></pre>
+<pre><code>## [1] &quot;data.frame&quot;</code></pre>
+<pre class="r"><code>ncol(a)</code></pre>
+<pre><code>## [1] 0</code></pre>
+<pre class="r"><code>nrow(a)</code></pre>
+<pre><code>## [1] 0</code></pre>
+<p><span style="color:crimson">26. Plot a histogram of all the Sepal.Width values in the dataset iris that are less than or equal to 3.0.</span></p>
+<pre class="r"><code>sepal.a &lt;- iris$Sepal.Width[iris$Sepal.Width&lt;=3]
+iris.hist&lt;-hist(sepal.a)</code></pre>
+<p><img src="data:image/png;base64,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6lNS2gS0VwJKfUpKm4D2SkCpT0lpE9BeCSj1KSltAtorAaU+JaVNQHsloCTlOt+idgMOs5RypghogICSkAPls6S0CWivBJSEFFWDkqYIaICAkpCialDSFAENEFASUlQNSpoioAECSkKKqkFJUwQ0QEBJSFE1KGmKgAYIKAkpqgYlTRHQAAElIUXVoKQpAhogoCSkqBqUNEVAAwSUhBRVg5KmCGiAgJKQompQ0hQBDRBQElJUDUqaIqABAkpCiqpBSVMENEBASUhRNShpioAGCCgJKaoGJU0R0AABJSFF1aCkKQIaIKAkpKgalDRFQAMElIQUVYOSpghogICSkKJqUNIUAQ0QUBJSVA1KmiKgAQKaP18jlOaYkqYIaICA5u5A+VSDqqcIaICA5q6oHchiEp0ioAECmruidiCLSXSKgAYIaO6K2oEsJtEpAhogoLkrageymESnCGiAgOauqB3IYhKdIqABApq7onYgi0l0ioAGCGjuitqBLCbRKQIaIKC5K2oHsphEpwhogIDmrqgdyGISnSKgAQKau6J2IItJdIqABgho7oragSwm0SkCGiCguStqB7KYRKcIaICA5q6oHchiEp0ioAECmruidiCLSXSKgAYIaO6K2oEsJtEpAhogoLkrageymESnCGiAgOauqB3IYhKdIqABApq7onYgi0l0ioAGCGjuitqBLCbRKQIaIKC5K2oHsphEpwhogIDmrqgdyGISnSKgAQKau6J2IItJdIqABgho7oragSwm0SkCGiCguStqB7KYRKcIaICA5q6oHchiEp0ioAECmruidiCLSXSKgAYIaO6K2oEsJtEpAhogoLkrageymESnCGiAgOauqB3IYhKdIqABApq7onYgi0l0ioAGCGjuitqBLCbRKQIaIKC5K2oHsphEpwhogIDmrqgdyGISnSKgAQKau6J2IItJdIqABgho7oragSwm0SkCGiCguStqB7KYRKcIaICA5q6oHchiEp0ioAECmruidiCLSXSKgAYIaO6K2oEsJtEpAhogoLkrageymESnCGiAgOauqB3IYhKdIqABApq7onYgi0l0ioAGCGjuitqBLCbRKQIaIKC5K2oHsphEpwhogIDmrqgdyGISnSKgAQKau6J2IItJdIqABgho7oragSwm0SkCGiCguStqB7KYRKcIaICA5q6oHchiEp0ioAECmrui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" width="672" /></p>
+<pre class="r"><code>iris.hist</code></pre>
+<pre><code>## $breaks
+##  [1] 2.0 2.1 2.2 2.3 2.4 2.5 2.6 2.7 2.8 2.9 3.0
+## 
+## $counts
+##  [1]  1  3  4  3  8  5  9 14 10 26
+## 
+## $density
+##  [1] 0.1204819 0.3614458 0.4819277 0.3614458 0.9638554 0.6024096 1.0843373
+##  [8] 1.6867470 1.2048193 3.1325301
+## 
+## $mids
+##  [1] 2.05 2.15 2.25 2.35 2.45 2.55 2.65 2.75 2.85 2.95
+## 
+## $xname
+## [1] &quot;sepal.a&quot;
+## 
+## $equidist
+## [1] TRUE
+## 
+## attr(,&quot;class&quot;)
+## [1] &quot;histogram&quot;</code></pre>
+<p><span style="color:crimson">27. Try using apply on ‘d’. What happens? Why?</span></p>
+<p><span style="color:blue"> The function (max in this case) is applied to each column, coercing data into the necessary type, then finding the max. This doesn’t cause an error, but really only works on the age and income columns. It returns 1 for the over 25 category and M for the gender. I’m guessin this is because its got a larger index value being later in the alphabet than F.</span></p>
+<pre class="r"><code>d &lt;- data.frame(gender = c(&quot;M&quot;, &quot;M&quot;, &quot;F&quot;, &quot;M&quot;, &quot;F&quot;, &quot;F&quot;),
+        age=c(47, 59, 21, 32, 33, 24),
+        income=c(55000, 88000, 32450, 76500, 123000, 45650))
+d$over25 &lt;- ifelse(d$age &gt; 25, 1, 0)
+d</code></pre>
+<pre><code>##   gender age income over25
+## 1      M  47  55000      1
+## 2      M  59  88000      1
+## 3      F  21  32450      0
+## 4      M  32  76500      1
+## 5      F  33 123000      1
+## 6      F  24  45650      0</code></pre>
+<pre class="r"><code>d.ap&lt;-apply(d, 2, min)
+d.ap</code></pre>
+<pre><code>##   gender      age   income   over25 
+##      &quot;F&quot;     &quot;21&quot; &quot; 32450&quot;      &quot;0&quot;</code></pre>
+<p><span style="color:crimson">28. What are the general elements of a function? Which elements are not required?</span></p>
+<p><span style="color:blue"> The general elements of a function are a name, an argument, and a body of code. The argument is not required.</span></p>
+<p><span style="color:crimson">29. How do you pass a value of an object from the local environment to the global environment (outside of a function)?</span></p>
+<p><span style="color:blue"> An object of value can be passed from the local to global environment by using the return() function.</span></p>
+<p><span style="color:crimson">30. What is the name of the R function that can help you identify errors in your function?</span></p>
+<p><span style="color:blue"> The debug() function can indicate where errors occured.</span></p>
+<p><span style="color:crimson">31. Aside from using the fucntion identified in 3. above, what is another way to troubleshoot your functions? Hint: we used this in our first function oddcount in homework 1.</span></p>
+<p><span style="color:blue"> Using the print function to identify when various tasks are completed can also help you locate issues in your code.</span></p>
+<p><span style="color:crimson">32. What is the name of a function to write your own error messages when writing a function?</span></p>
+<p><span style="color:blue"> The stop() and stopifnot() functions can be used to write your own error messages.</span></p>
+<p><span style="color:crimson">33. Why do you want to keep your functions short?</span></p>
+<p><span style="color:blue">Keeping functions short allows for easier updating and troubleshoooting.</span></p>
+<p><span style="color:crimson">34. What are local versus global variables? Why do they matter when you write functions?</span></p>
+<p><span style="color:blue"> The local values are only utilized within the function and are not saved. The global variables are the ones that exist and are stored within your R environment. If you don’t return results/variables from your function to the global environment, you’ll have to run the function again to get the values, which could be time consuming depending on the task.</span></p>
+<p><span style="color:crimson">35. What happens if you write the function as following in the code below and test it on wavelength = 0.02 m?</span></p>
+<pre class="r"><code>wave_to_freq &lt;- function(wave) {
+  #note wavelength needs to be in meters
+  freq &lt;- (299792458/wave) #speed of light in m/s
+  freq
+}
+wave_to_freq(0.02)</code></pre>
+<pre><code>## [1] 14989622900</code></pre>
+<p><span style="color:crimson">36. Using the new function wave_to_freq(), what happens if you assign the function wave_to_freq() to object x and call x?</span></p>
+<p><span style="color:blue"> When the function is stored as object x, there’s no input for the wave argument, causing an error.</span></p>
+<pre class="r"><code>#x&lt;-wave_to_freq()
+#x</code></pre>
+<p><span style="color:crimson">37. Write a function that converts nanometers (nm) to meters (m). Make sure to provide useful comments. Save the function as a .R script with a logical name (e.g., “nano_to_meter”) and push it to your es207_hw2 repo in GitHub.</span></p>
+<p><a href="https://github.com/ebolch/es207_hw2/blob/master/nm_to_m.R" class="uri">https://github.com/ebolch/es207_hw2/blob/master/nm_to_m.R</a></p>
+<pre class="r"><code>#This function convers nanometers (10^-9) to meters.
+nm_to_m &lt;- function(nm) {
+  m &lt;- nm*10^9 #Multiply nm by 10^9 to get meters
+  m
+}
+
+nm_to_m(0.000000001)</code></pre>
+<pre><code>## [1] 1</code></pre>
+<p><span style="color:crimson">38.Write a function that can take wavelength in micrometers as an input, and output the equivalent value in Giga Herz (GHz).</span></p>
+<pre class="r"><code>microm_to_GHz &lt;- function(wave) {
+  freq &lt;- (299792458/(wave*10^-6))/10^9 #speed of light / wave*micro/gighz
+  freq
+}
+microm_to_GHz(1000) #1cm wavelength ~ 300ghz check</code></pre>
+<pre><code>## [1] 299.7925</code></pre>
+<pre class="r"><code>microm_to_GHz(30000)</code></pre>
+<pre><code>## [1] 9.993082</code></pre>
+<p><span style="color:crimson">39. Using the function you wrote above, what radar band (provide the letter) corresponds to a wavelength of 30,000 micrometers? (Hint you may need to do some internet research about the frequency of different radar bands).</span></p>
+<p><span style="color:blue"> ~10 GHz falls within X-band radar.</span></p>
+<p><span style="color:crimson">40. Write a for loop that caluculates the square of the first 10 elements in the vector x, where x &lt;- rnorm(40)</span></p>
+<pre class="r"><code>x &lt;- rnorm(40)
+
+for (n in x[1:10]){
+  print(n^2)}</code></pre>
+<pre><code>## [1] 0.001068892
+## [1] 4.247613
+## [1] 2.454204e-06
+## [1] 2.37632
+## [1] 0.5154573
+## [1] 0.3408008
+## [1] 0.06906748
+## [1] 0.2451223
+## [1] 2.708986
+## [1] 0.2320105</code></pre>
+<p><span style="color:crimson">41. Write a while loop that prints the even numbers from 4 through 29.</span></p>
+<pre class="r"><code>i &lt;- 2
+while (i &lt;= 29) # Will keep looping as long as this is TRUE
+  {
+  print(i)
+  i &lt;- i+2
+  }</code></pre>
+<pre><code>## [1] 2
+## [1] 4
+## [1] 6
+## [1] 8
+## [1] 10
+## [1] 12
+## [1] 14
+## [1] 16
+## [1] 18
+## [1] 20
+## [1] 22
+## [1] 24
+## [1] 26
+## [1] 28</code></pre>
+<p><span style="color:crimson">42. Write a while loop that prints multiples of 10 from 100 to 190.</span></p>
+<pre class="r"><code>i &lt;- 100
+while (i &lt;= 190) # Will keep looping as long as this is TRUE
+  {
+  print(i)
+  i &lt;- i+10
+  }</code></pre>
+<pre><code>## [1] 100
+## [1] 110
+## [1] 120
+## [1] 130
+## [1] 140
+## [1] 150
+## [1] 160
+## [1] 170
+## [1] 180
+## [1] 190</code></pre>
+<ol start="43" style="list-style-type: decimal">
+<li>Create a 10 x 10 matrix of random numbers. Write a loop that replaces the 3rd row and 5th column of numbers with “ciao”.</li>
+</ol>
+<p><span style="color:crimson">44. What is a loop? Can you provide me with a real-life example in either remote sensing or your own research where such a thing would be handy?.</span></p>
+<p><span style="color:blue">A loop is a repeated calculation that is done on a series of data. An example where it’s useful in remote sensing is doing a calculation on multiple images. For example caclulating NDVI on a series of 100s of images.</span></p>
+<p><span style="color:crimson">45. What does it mean to “grow” variables or datasets using a loop? Show an example of code that does this.</span></p>
+<p><span style="color:blue">This means to iterate through a dataset, performing a calculation, when instead this could be done in a vectorized method, such as apply. Example below.</span></p>
+<pre class="r"><code># set.seed(42);
+# m=10; n=10;
+# mymat&lt;-replicate(m, rnorm(n)) # create matrix of normal random numbers
+# mydframe=data.frame(mymat)    # transform into data frame
+# for (i in 1:m) {
+#   for (j in 1:n) {
+#     mydframe[i,j]&lt;-mydframe[i,j] + 10*sin(0.75*pi)
+#     print(mydframe)
+#   }
+# }
+# 
+# #versus
+# 
+# set.seed(42);
+# m=10; n=10;
+# mymat2&lt;-replicate(m, rnorm(n)) 
+# mydframe2=data.frame(mymat2)
+# mydframe2&lt;-mydframe2 + 10*sin(0.75*pi)</code></pre>
+<p><span style="color:crimson">46. In 500 words or less, discuss why you would want to write loops, why some people look down on them in R, what the suggested alternative is.</span></p>
+<p><span style="color:blue"> Typically if you can, a vectorized method is faster, so people often look down on loops. There are cases where a loop is needed or is a better solution.</span></p>
+<p><span style="color:crimson">47. Use lapply() and a function to find the coefficient of variation (the standard deviation divided by the mean) for all columns in the mtcars dataset.</span></p>
+<pre class="r"><code>coevar &lt;- function(x){
+  return(sd(x)/mean(x))
+}
+mtcars.cov &lt;- lapply(mtcars, coevar)
+mtcars.cov</code></pre>
+<pre><code>## $mpg
+## [1] 0.2999881
+## 
+## $cyl
+## [1] 0.2886338
+## 
+## $disp
+## [1] 0.5371779
+## 
+## $hp
+## [1] 0.4674077
+## 
+## $drat
+## [1] 0.1486638
+## 
+## $wt
+## [1] 0.3041285
+## 
+## $qsec
+## [1] 0.1001159
+## 
+## $vs
+## [1] 1.152037
+## 
+## $am
+## [1] 1.228285
+## 
+## $gear
+## [1] 0.2000825
+## 
+## $carb
+## [1] 0.5742933</code></pre>
+<p><span style="color:crimson">48. The function below scales a vector so it falls in the range [0, 1]. How would you apply it to every column of a data frame? How would you apply it to every numeric column in a data frame?</span></p>
+<pre class="r"><code>scale01 &lt;- function (x) {
+  rng &lt;-range(x, na.rm=TRUE)
+  (x-rng[1] / rng[2] - rng[1])
+}
+sc &lt;- data.frame(x = 1:4, y = &quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;d&quot;)
+
+#lapply(sc, scale01) #works for numeric</code></pre>
+<p><span style="color:crimson">49. Use both for loops and lapply() to fit linear models to the mtcars data frame using the formulas stored in this list:</span></p>
+<pre class="r"><code>formulas &lt;- list(
+  mpg ~ disp, 
+  mpg ~ I(1 / disp), 
+  mpg ~ disp + wt,
+  mpg ~ I(1 / disp) + wt
+)</code></pre>
+<p><span style="color:crimson">50. What are the sys.time() calculations for the loop and lapply() solutions above?</span></p>
 
 
 

@@ -273,7 +273,7 @@ wave_to_freq(0.02)
 
 <span style="color:crimson">37. Write a function that converts nanometers (nm) to meters (m). Make sure to provide useful comments. Save the function as a .R script with a logical name (e.g., “nano_to_meter”) and push it to your es207_hw2 repo in GitHub.</span>
 
-
+https://github.com/ebolch/es207_hw2/blob/master/nm_to_m.R
 
 ```{r}
 #This function convers nanometers (10^-9) to meters.
@@ -285,9 +285,131 @@ nm_to_m <- function(nm) {
 nm_to_m(0.000000001)
 ```
 
+<span style="color:crimson">38.Write a function that can take wavelength in micrometers as an input, and output the equivalent value in Giga Herz (GHz).</span>
+
+```{r}
+microm_to_GHz <- function(wave) {
+  freq <- (299792458/(wave*10^-6))/10^9 #speed of light / wave*micro/gighz
+  freq
+}
+microm_to_GHz(1000) #1cm wavelength ~ 300ghz check
+microm_to_GHz(30000)
+```
+
+
+<span style="color:crimson">39. Using the function you wrote above, what radar band (provide the letter) corresponds to a wavelength of 30,000 micrometers? (Hint you may need to do some internet research about the frequency of different radar bands).</span>
+
+<span style="color:blue"> ~10 GHz falls within X-band radar.</span>
+
+<span style="color:crimson">40. Write a for loop that caluculates the square of the first 10 elements in the vector x, where x <- rnorm(40)</span>
+
+```{r}
+x <- rnorm(40)
+
+for (n in x[1:10]){
+  print(n^2)}
+```
+<span style="color:crimson">41. Write a while loop that prints the even numbers from 4 through 29.</span>
+
+```{r}
+i <- 2
+while (i <= 29) # Will keep looping as long as this is TRUE
+  {
+  print(i)
+  i <- i+2
+  }
+```
+
+<span style="color:crimson">42. Write a while loop that prints multiples of 10 from 100 to 190.</span>
+
+```{r}
+i <- 100
+while (i <= 190) # Will keep looping as long as this is TRUE
+  {
+  print(i)
+  i <- i+10
+  }
+```
+43. Create a 10 x 10 matrix of random numbers. Write a loop that replaces the 3rd row and 5th column of numbers with “ciao”.
+
+```{r}
+mat = matrix(rnorm(100), 10, 10)
+
+```
+
+<span style="color:crimson">44. What is a loop? Can you provide me with a real-life example in either remote sensing or your own research where such a thing would be handy?.</span>
+
+<span style="color:blue">A loop is a repeated calculation that is done on a series of data. An example where it's useful in remote sensing is doing a calculation on multiple images. For example caclulating NDVI on a series of 100s of images.</span>
+
+<span style="color:crimson">45. What does it mean to “grow” variables or datasets using a loop? Show an example of code that does this.</span>
+
+<span style="color:blue">This means to iterate through a dataset, performing a calculation, when instead this could be done in a vectorized method, such as apply. Example below.</span>
+
+```{r}
+# set.seed(42);
+# m=10; n=10;
+# mymat<-replicate(m, rnorm(n)) # create matrix of normal random numbers
+# mydframe=data.frame(mymat)    # transform into data frame
+# for (i in 1:m) {
+#   for (j in 1:n) {
+#     mydframe[i,j]<-mydframe[i,j] + 10*sin(0.75*pi)
+#     print(mydframe)
+#   }
+# }
+# 
+# #versus
+# 
+# set.seed(42);
+# m=10; n=10;
+# mymat2<-replicate(m, rnorm(n)) 
+# mydframe2=data.frame(mymat2)
+# mydframe2<-mydframe2 + 10*sin(0.75*pi)
+```
+
+
+<span style="color:crimson">46. In 500 words or less, discuss why you would want to write loops, why some people look down on them in R, what the suggested alternative is.</span>
+
+<span style="color:blue"> Typically if you can, a vectorized method is faster, so people often look down on loops. There are cases where a loop is needed or is a better solution.</span>
+
+<span style="color:crimson">47. Use lapply() and a function to find the coefficient of variation (the standard deviation divided by the mean) for all columns in the mtcars dataset.</span>
+
+```{r}
+coevar <- function(x){
+  return(sd(x)/mean(x))
+}
+mtcars.cov <- lapply(mtcars, coevar)
+mtcars.cov
+```
+
+<span style="color:crimson">48. The function below scales a vector so it falls in the range [0, 1]. How would you apply it to every column of a data frame? How would you apply it to every numeric column in a data frame?</span>
+
+```{r}
+scale01 <- function (x) {
+  rng <-range(x, na.rm=TRUE)
+  (x-rng[1] / rng[2] - rng[1])
+}
+sc <- data.frame(x = 1:4, y = 5:8)
+
+lapply(sc, scale01) #works for numeric
 
 
 
+```
 
 
+<span style="color:crimson">49. Use both for loops and lapply() to fit linear models to the mtcars data frame using the formulas stored in this list:</span>
+
+```{r}
+formulas <- list(
+  mpg ~ disp, 
+  mpg ~ I(1 / disp), 
+  mpg ~ disp + wt,
+  mpg ~ I(1 / disp) + wt
+)
+
+
+```
+
+
+<span style="color:crimson">50. What are the sys.time() calculations for the loop and lapply() solutions above?</span>
 
