@@ -8,7 +8,7 @@ output: html_document
 <span style="color:blue"> An alternative use of ncol() could be to determine if an object has dimensions associated with it. For example when ncol function is used on a vector as opposed to an array or matrix it will return NULL.</span>
 
 ```{r}
-?ncol
+#?ncol
 m<-matrix(1:10, 2,5)
 m
 ncol(m)
@@ -19,19 +19,275 @@ v
 ncol(v)
 NCOL(v)
 ```
-2. Make sure to clone the tutorial repo to a new repo in your GitHub account called es207_hw2. I will check your repo, so don’t skip this step!
+<span style ="color:crimson">2. Make sure to clone the tutorial repo to a new repo in your GitHub account called es207_hw2. I will check your repo, so don’t skip this step!</span>
 
-3. Convert RMarkdown_Demo_1.R into a well commented and easy to follow R Markdown document. Turn this in as a .pdf document separate from the rest of your homework assignment. Call it “yourlastname_demo_1.pdf”.
+https://github.com/ebolch/es207_hw2
 
-4. Complete the remaining homework below as a well-commented and easy to follow R Markdown notebook with approriate accompanying text. Turn this in as a .html document. Call it “yourlastname_hw2.html”.
+<span style="color:crimson">3. Convert RMarkdown_Demo_1.R into a well commented and easy to follow R Markdown document. Turn this in as a .pdf document separate from the rest of your homework assignment. Call it “yourlastname_demo_1.pdf”.</span>
+
+https://github.com/ebolch/es207_hw2/blob/master/bolch_demo_1.pdf
+
+<span style="color:crimson">4. Complete the remaining homework below as a well-commented and easy to follow R Markdown notebook with approriate accompanying text. Turn this in as a .html document. Call it “yourlastname_hw2.html”.</span>
+
+<span style="color:crimson">5. Create and print a new vector, w that is a subset of the first 4 elements of vector v, where v <- c(8:19)</span>
+```{r}
+v <- c(8:19)
+v
+w <- v[1:4]
+w
+```
+<span style="color:crimson">6. Create and print a new vector, h that is a subset of the middle 5 elements of vector d, where d <- c(8:20)</span>
 
 
 ```{r}
-
+d <- c(8:20)
+d
+h <- d[5:9]
+h
 ```
+<span style="color:crimson">7. What is the length of vector w from above?</span>
 
 ```{r}
+length(w)
+```
+<span style="color:crimson">8. What are the 3 properties of a vector, other than its contents?</span>
+
+<span style="color:blue">The 3 preperties of a vector other than contents are type, length, and attributes.</span>
+
+<span style="color:crimson">9. Can you predict the output of the following uses of c()? c(3,FALSE) c("a",1) c(4L,2)</span>
+
+<span style="color:blue">c(3,FALSE) will be a double because logical variables can be coerced to numbers, c("a",1) will be a character because "a" is a character and the most flexible type, and c(4L,2) will be a double because it contains a number and another value that's not an integer.</span>
+```{r}
+typeof(c(3,FALSE))
+typeof(c("a",1))
+typeof(c(4L,2))
+```
+<span style="color:crimson">10. What are the 4 types of common atomic vectors? What are the 2 rare types?</span>
+
+<span style="color:blue">The 4 types of common atomic vectors are, double, integer, character, and logical. The two rare types are complex and raw.</span>
+
+<span style="color:crimson">11. Why is 1=="1" true? Why is -1 < FALSE true? Why is "one< 2 false?'</span>
+
+<span style="color:blue">Coercion will happen automatically when using operators in r, the data type will be coerced  based on the operator. In the first example, double 1 will be coerced to character "1". In the second example, the logical FALSE will be coerced into a 0, which is less than 1, and in the final example, R will fail to coerce the vectors into logical, which results in False.
+
+<span style="color:crimson">12. Why is the default missing value NA, a logical vector? What’s so special about logical vectors? Hint: think about c(FALSE,NA_character)</span>
+
+<span style="color:blue">Because it only has 2 options, either it is NA or it has a value.</span>
+
+<span style="color:crimson">13. Provide the value of the last element in the result of the vector operation d * 2 from the vectors defined above.</span>
+
+```{r}
+d.2<-d*2
+d.2
+d.2[length(d.2)]
+```
+<span style="color:crimson">14. Create a vector a with a sequence of 11 elements in it ranging from 0.6 to 1.9. Create another, logical vector b that identifies which elements in a are greater than or equal to 1.1. Print your results.</span>
+```{r}
+a<-seq(0.6,1.9, length = 11)
+a
+b<-a[a>=1.1]
+b
+```
+
+<span style="color:crimson">15. Set all elements in vector a from above to 2.0 if they are greater than or equal to 1.1.</span>
+
+```{r}
+a[a>=1.1]<-2
+a
+```
+
+<span style="color:crimson">16. Use str() to compare the results of using list() and c() on l and j for: l <-c(list(1,2),c(3,4)) and j=list(list(1,2),c(3,4))</span>
+
+```{r}
+l <- c(list(1,2),c(3,4))
+j <- list(list(1,2),c(3,4))
+
+str(l)
+str(j)
 
 ```
+<span style="color:blue">List(list()) nests a list within the first.</span>
+
+<span style="color:crimson">17. Show what happens when you use unlist() on l and j.</span>
+```{r}
+unlist(l)
+unlist(j)
+```
+<span style="color:crimson">18. If factors are essentially integers under the hood, why do we use them, and not just use integers (e.g., 1s and 2s instead of “male”, “female”)?</span>
+
+<span style="color:blue"> For large numbers of levels, remembering or having to associate a number with a level would be hard to remember/more complicated.</span>
+
+<span style="color:crimson">19. Using table(), provide the frequency of no and yes in my.fac.</span>
+
+```{r}
+my.fac <- factor(c("yes", "yes", "no", "yes", "yes", "yes"))
+my.fac
+table(my.fac)
+```
+<span style="color:crimson">20. What does this R code below do? How are f1 and f2 different from f3?</span>
+
+<span style="color:blue">f1 - This code generates a vector of all letters of class factor, then settings the levels of f1 to rev(levels(f1)), reverses the order of the letters in the levels of the factor.</span>
+
+<span style="color:blue">f2 - this code reverses the vector of levels that is of class factor, after the levels have been generated by factor(), so they remain in alphabetical order. </span>
+
+<span style="color:blue"> f3 - This code creates a vector of letters of class factor, and reverses the order of the levels of the factors.</span>
+
+<span style="color:blue">These differ because of the order in which functions are applied, and because factors have multiple components, a vector and its associated levels.</span>
+
+
+```{r}
+f1 <- factor(letters)
+levels(f1) <-rev(levels(f1))
+f2 <- rev(factor(letters))
+f3 <- factor(letters, levels=rev(letters))
+f1
+f2
+f3
+```
+<span style="color:crimson">21. If is.matrix(x) is TRUE, what will is.array(x) return?</span>
+
+<span style="color:blue">False because an array will have an extra dimension (layers).</span>
+
+<span style="color:crimson">22. Why didn’t that work? Hint: read the errors</span>
+
+<span style="color:blue">This doesnt work because there are 3 ages, not 2 in the ages vector. Since there are a different number of rows in the vectors, they can't be put into a data frame like this.</span>
+```{r}
+f <- data.frame(kids=c("Jack","Jill"),ages=c(12,11))
+f
+#f <- data.frame(kids=c("Jack","Jill"),ages=c(12,10,11))
+#f
+```
+
+<span style="color:crimson">BONUS. What is a tibble? Why might it be better than a data frame? Why might it be worse?</span>
+
+<span style="color:blue"> It may be better or worse depending on what you want. A tibble will read in the kids names as character vectors, while a dataframe will read them in as factors. If you want factors, such as when you'll be separating something based on a feature, this may not be helpful. If you're not doing this, and you have to manipulate the information in the kids column, you'll have to delete/modify the levels after you make changes.</span>
+
+```{r}
+#f2 <- tibble(kids=c("Jack","Jill"),ages=c(12,10))
+#f2
+```
+<span style="color:crimson">23. What does as.matrix() do when applied to a data frame with columns of different types?</span>
+
+<span style="color:blue">The vectors are coerced into type "character".</span>
+
+```{r}
+f.mat<-as.matrix(f)
+f.mat
+```
+
+
+<span style="color:crimson">24. What if we don’t have the same variable name? Change the data frame variables names using names(d2) <- c("ages","kids"). Then, use the help documentation to merge d1 and d2. Print your results.</span>
+
+```{r}
+d1 <- data.frame(names = c("Jack", "Jill", "John"), states = c("CA", "IL", "IL"))
+d2 <- data.frame(ages = c(10, 7, 12), names = c("Jill", "Jillian", "Jack"))
+d1
+d2
+merge(d1,d2)
+names(d2) <- c("ages","kids")
+merge(d1,d2)
+
+merge(d1,d2, by.x = "names", by.y = "kids")
+```
+
+<span style="color:crimson">25. Can you have a data frame with 0 rows? What about 0 columns?</span>
+
+<span style="color:blue">Yes, if it has no information in it (NULL).</span>
+
+```{r}
+a <- data.frame(NULL)
+class(a)
+ncol(a)
+nrow(a)
+```
+
+
+<span style="color:crimson">26. Plot a histogram of all the Sepal.Width values in the dataset iris that are less than or equal to 3.0.</span>
+
+```{r}
+sepal.a <- iris$Sepal.Width[iris$Sepal.Width<=3]
+iris.hist<-hist(sepal.a)
+iris.hist
+```
+<span style="color:crimson">27. Try using apply on ‘d’. What happens? Why?</span>
+
+<span style="color:blue"> The function (max in this case) is applied to each column, coercing data into the necessary type, then finding the max. This doesn't cause an error, but really only works on the age and income columns. It returns 1 for the over 25 category and M for the gender. I'm guessin this is because its got a larger index value being later in the alphabet than F.</span>
+
+```{r}
+d <- data.frame(gender = c("M", "M", "F", "M", "F", "F"),
+        age=c(47, 59, 21, 32, 33, 24),
+        income=c(55000, 88000, 32450, 76500, 123000, 45650))
+d$over25 <- ifelse(d$age > 25, 1, 0)
+d
+d.ap<-apply(d, 2, min)
+d.ap
+```
+<span style="color:crimson">28. What are the general elements of a function? Which elements are not required?</span>
+
+<span style="color:blue"> The general elements of a function are a name, an argument, and a body of code. The argument is not required.</span>
+
+<span style="color:crimson">29. How do you pass a value of an object from the local environment to the global environment (outside of a function)?</span>
+
+<span style="color:blue"> An object of value can be passed from the local to global environment by using the return() function.</span>
+
+<span style="color:crimson">30. What is the name of the R function that can help you identify errors in your function?</span>
+
+<span style="color:blue"> The debug() function can indicate where errors occured.</span>
+
+<span style="color:crimson">31. Aside from using the fucntion identified in 3. above, what is another way to troubleshoot your functions? Hint: we used this in our first function oddcount in homework 1.</span>
+
+<span style="color:blue"> Using the print function to identify when various tasks are completed can also help you locate issues in your code.</span>
+
+<span style="color:crimson">32. What is the name of a function to write your own error messages when writing a function?</span>
+
+<span style="color:blue"> The stop() and stopifnot() functions can be used to write your own error messages.</span>
+
+<span style="color:crimson">33. Why do you want to keep your functions short?</span>
+
+<span style="color:blue">Keeping functions short allows for easier updating and troubleshoooting.</span>
+
+<span style="color:crimson">34. What are local versus global variables? Why do they matter when you write functions?</span>
+
+<span style="color:blue"> The local values are only utilized within the function and are not saved. The global variables are the ones that exist and are stored within your R environment. If you don't return results/variables from your function to the global environment, you'll have to run the function again to get the values, which could be time consuming depending on the task.</span>
+
+<span style="color:crimson">35. What happens if you write the function as following in the code below and test it on wavelength = 0.02 m?</span>
+
+```{r}
+wave_to_freq <- function(wave) {
+  #note wavelength needs to be in meters
+  freq <- (299792458/wave) #speed of light in m/s
+  freq
+}
+wave_to_freq(0.02)
+
+```
+
+<span style="color:crimson">36. Using the new function wave_to_freq(), what happens if you assign the function wave_to_freq() to object x and call x?</span>
+
+<span style="color:blue"> When the function is stored as object x, there's no input for the wave argument, causing an error.</span>
+
+```{r}
+#x<-wave_to_freq()
+#x
+```
+
+<span style="color:crimson">37. Write a function that converts nanometers (nm) to meters (m). Make sure to provide useful comments. Save the function as a .R script with a logical name (e.g., “nano_to_meter”) and push it to your es207_hw2 repo in GitHub.</span>
+
+
+
+```{r}
+#This function convers nanometers (10^-9) to meters.
+nm_to_m <- function(nm) {
+  m <- nm*10^9 #Multiply nm by 10^9 to get meters
+  m
+}
+
+nm_to_m(0.000000001)
+```
+
+
+
+
+
 
 
